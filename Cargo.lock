@@ -2259,6 +2259,7 @@ dependencies = [
 name = "p2panda-next-test"
 version = "0.1.0"
 dependencies = [
+ "hex",
  "iroh",
  "p2panda-core",
  "p2panda-discovery-next",
@@ -2267,6 +2268,8 @@ dependencies = [
  "p2panda-sync-next",
  "rand_chacha 0.9.0",
  "serde",
+ "thiserror 2.0.17",
+ "tokio",
 ]
 
 [[package]]

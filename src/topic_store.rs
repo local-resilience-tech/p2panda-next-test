@@ -16,6 +16,12 @@ pub enum LogType {
 #[derive(Clone, Debug, PartialEq, Eq, StdHash, Serialize, Deserialize)]
 pub struct LogId(LogType, TopicId);
 
+impl LogId {
+    pub fn new(log_type: LogType, topic: &TopicId) -> Self {
+        Self(log_type, *topic)
+    }
+}
+
 pub type Logs<L> = HashMap<PublicKey, Vec<L>>;
 
 #[derive(Clone, Debug)]
