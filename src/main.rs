@@ -1,4 +1,4 @@
-use std::sync::LazyLock;
+use std::{str::from_utf8, sync::LazyLock};
 
 use crate::{
     extensions::TestAppExtensions,
@@ -41,7 +41,7 @@ async fn main() {
         .await
         .unwrap();
 
-    println!("Subscribing to network events...");
+    println!("Subscribing to network events for debug reasons...");
     let network_events_rx = network.events().await.unwrap();
     tokio::spawn(async move {
         println!("Spawning task to handle network events...");
@@ -90,7 +90,10 @@ async fn main() {
                                 "* Received operation on topic {:?} with header: {:?}",
                                 topic_id, header
                             );
-                            println!("  -- body raw bytes: {:?}", body);
+                            println!(
+                                "  -- body raw bytes: {:?}",
+                                from_utf8(&body.unwrap().to_bytes())
+                            );
                         }
                     }
                 }
