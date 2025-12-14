@@ -40,9 +40,9 @@ impl OperationStore {
         self.inner.clone()
     }
 
-    pub fn inner(&self) -> &MemoryStore<LogId, TestAppExtensions> {
-        &self.inner
-    }
+    // pub fn inner(&self) -> &MemoryStore<LogId, TestAppExtensions> {
+    //     &self.inner
+    // }
 
     /// Creates, signs and stores new operation in the author's append-only log.
     ///

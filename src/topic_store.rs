@@ -51,24 +51,24 @@ impl TopicStore {
         }
     }
 
-    pub async fn add_log(&self, topic: &TopicId, public_key: &PublicKey, log_id: &LogId) {
-        {
-            let mut lock = self.inner.write().unwrap();
-            lock.topics
-                .entry(topic.clone())
-                .and_modify(|author_logs| {
-                    author_logs
-                        .entry(*public_key)
-                        .and_modify(|logs| {
-                            if !logs.contains(log_id) {
-                                logs.push(log_id.clone());
-                            }
-                        })
-                        .or_insert(vec![log_id.clone()]);
-                })
-                .or_insert(HashMap::from([(*public_key, vec![log_id.clone()])]));
-        }
-    }
+    // pub async fn add_log(&self, topic: &TopicId, public_key: &PublicKey, log_id: &LogId) {
+    //     {
+    //         let mut lock = self.inner.write().unwrap();
+    //         lock.topics
+    //             .entry(topic.clone())
+    //             .and_modify(|author_logs| {
+    //                 author_logs
+    //                     .entry(*public_key)
+    //                     .and_modify(|logs| {
+    //                         if !logs.contains(log_id) {
+    //                             logs.push(log_id.clone());
+    //                         }
+    //                     })
+    //                     .or_insert(vec![log_id.clone()]);
+    //             })
+    //             .or_insert(HashMap::from([(*public_key, vec![log_id.clone()])]));
+    //     }
+    // }
 }
 
 impl TopicLogMap<TopicId, LogId> for TopicStore {

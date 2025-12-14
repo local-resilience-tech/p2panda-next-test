@@ -49,12 +49,12 @@ async fn main() {
         while let Ok(event) = network_events_rx.recv().await {
             match event {
                 NetworkEvent::Transport(status) => {
-                    println!("* Transport status changed: {:?}", status);
+                    println!("* Network event: Transport status changed: {:?}", status);
                 }
                 NetworkEvent::Relay(status) => {
-                    println!("* Relay status changed: {:?}", status);
+                    println!("* Network event: Relay status changed: {:?}", status);
                 }
-                NetworkEvent::Discovery(discovery_event) => {
+                NetworkEvent::Discovery(_discovery_event) => {
                     // println!("* Discovery event: {:?}", discovery_event);
                 }
             }
@@ -124,7 +124,8 @@ async fn main() {
                     "Created operation: header = {:?}, body = {:?}",
                     operation.header, operation.body
                 );
-                // topic_tx.publish_operation(operation).await.unwrap();
+
+                topic_tx.publish(operation).await.unwrap();
             }
             Err(error) => {
                 eprintln!("Failed to create operation: {:?}", error);
