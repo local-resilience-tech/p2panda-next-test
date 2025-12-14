@@ -8,7 +8,7 @@ use crate::{
 };
 use p2panda_core::{Body, Hash, Header, PrivateKey};
 use p2panda_discovery::address_book::memory::MemoryStore as MemoryAddressBook;
-use p2panda_net::{MdnsDiscoveryMode, Network, NetworkBuilder, TopicId};
+use p2panda_net::{MdnsDiscoveryMode, Network, NetworkBuilder, TopicId, events::NetworkEvent};
 
 use p2panda_sync::{
     managers::topic_sync_manager::TopicSyncManagerConfig, topic_log_sync::TopicLogSyncEvent,
@@ -47,7 +47,17 @@ async fn main() {
         println!("Spawning task to handle network events...");
         let mut network_events_rx = network_events_rx;
         while let Ok(event) = network_events_rx.recv().await {
-            println!("* Network event: {:?}", event);
+            match event {
+                NetworkEvent::Transport(status) => {
+                    println!("* Transport status changed: {:?}", status);
+                }
+                NetworkEvent::Relay(status) => {
+                    println!("* Relay status changed: {:?}", status);
+                }
+                NetworkEvent::Discovery(discovery_event) => {
+                    // println!("* Discovery event: {:?}", discovery_event);
+                }
+            }
         }
     });
 
